@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Um Convite do Coração</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --rosa: #ffa7c4;
+            --lilas: #e2b0ff;
+            --azul: #8ac4ff;
+            --cinza: #f5f5f5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460);
+            min-height: 100vh;
+            color: var(--cinza);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header {
+            opacity: 0;
+            animation: fadeIn 2s forwards;
+            margin-bottom: 4rem;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            color: var(--cinza);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+        }
+
+        .poema {
+            font-style: italic;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin: 2rem 0;
+            opacity: 0;
+            animation: slideUp 1s 1s forwards;
+        }
+
+        .convite-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            transform: scale(0);
+            animation: popIn 1s 2s forwards;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .botao-convite {
+            background: none;
+            border: 2px solid var(--cinza);
+            color: var(--cinza);
+            padding: 1rem 3rem;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .botao-convite:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .coracoes {
+            position: fixed;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        /* Estilos para Polaroids */
+        .polaroid {
+            position: fixed;
+            width: 200px;
+            height: 250px;
+            background: white;
+            padding: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transform: rotate(-5deg);
+            animation: float 6s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+        }
+
+        .polaroid:nth-child(even) {
+            transform: rotate(3deg);
+            animation-delay: 2s;
+        }
+
+        .polaroid:nth-child(3n) {
+            transform: rotate(2deg);
+            animation-delay: 4s;
+        }
+
+        /* Estrelas mais intensas */
+        .estrela {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            animation: cintilar 1s infinite alternate;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes cintilar {
+            0% {
+                opacity: 0.5;
+                transform: scale(1);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-5deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+
+        .mensagem-escondida {
+            display: none;
+            margin-top: 2rem;
+            font-size: 1.4rem;
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="estrelas" id="estrelas"></div>
+
+    <!-- Polaroids com fotos -->
+    <div class="polaroid" style="top:10%; left:5%">
+        <img src="828b1fc7bee5cc4b8af6ccedf0c30ac5.jpg" alt="Foto 1">
+        <div style="margin-top:10px; color:#666; font-size:0.9em">Nosso momento</div>
+    </div>
+
+    <div class="polaroid" style="top:60%; right:5%">
+        <img src="b65fcf0a4660e913c9838e5bc2dd0882.jpg" alt="Foto 2">
+        <div style="margin-top:10px; color:#666; font-size:0.9em">Memórias</div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="flutuante">💖 Para Você 💖</h1>
+        </div>
+
+        <div class="convite-container">
+            <p class="poema">
+                "No vasto céu da existência, onde as estrelas são versos,<br>
+                vejo em você a poesia que o universo reserva.<br>
+                Como Camus, busco sentido no absurdo da vida,<br>
+                e encontro em seu olhar a razão mais vivida.<br><br>
+                Como Machado, observo as nuances da alma,<br>
+                e em você, descubro a mais pura calma.<br>
+                Como Pessoa, divido-me em mil sentimentos,<br>
+                mas todos convergem para você, em meus pensamentos."
+            </p>
+
+            <button class="botao-convite" onclick="revelarConvite()">Descobrir Convite</button>
+
+            <div id="mensagemEscondida" class="mensagem-escondida">
+                <p>Que tal transformarmos o efêmero em eterno?<br>
+                    Como numa noite de jazz, onde o tempo se dissolve,<br>
+                    e só restam duas almas, dançando sob as estrelas.<br><br>
+                    <span style="font-family: 'Dancing Script', cursive; font-size: 2rem;">Sábado, 8 da noite?</span>
+                </p>
+
+                <div style="margin-top: 2rem;">
+                    <button class="botao-convite" onclick="resposta('sim')">Sim! Vamos brilhar ✨</button>
+                    <button class="botao-convite" onclick="resposta('talvez')" style="margin-left: 1rem;">Surpreenda-me
+                        🌙</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Música de fundo -->
+    <audio id="musica" loop>
+        <source src="lalaland.mp3" type="audio/mp3">
+        Seu navegador não suporta áudio.
+    </audio>
+
+    <script defer>
+        // Música de fundo
+        const musica = document.getElementById('musica');
+        musica.volume = 0.3; // Volume reduzido para ser suave
+        musica.play();
+
+        // Estrelas cintilantes
+        const estrelasContainer = document.getElementById('estrelas');
+        for (let i = 0; i < 300; i++) {
+            const estrela = document.createElement('div');
+            estrela.className = 'estrela';
+            estrela.style.width = `${Math.random() * 4}px`;
+            estrela.style.height = estrela.style.width;
+            estrela.style.top = `${Math.random() * 100}%`;
+            estrela.style.left = `${Math.random() * 100}%`;
+            estrela.style.animationDuration = `${Math.random() * 0.5 + 0.3}s`;
+            estrelasContainer.appendChild(estrela);
+        }
+
+        function criarCoracao() {
+            const coracao = document.createElement('div');
+            coracao.className = 'coracoes';
+            coracao.innerHTML = '❤️';
+            coracao.style.left = Math.random() * 100 + 'vw';
+            coracao.style.animation = `fall ${Math.random() * 3 + 2}s linear`;
+            document.body.appendChild(coracao);
+
+            setTimeout(() => coracao.remove(), 5000);
+        }
+
+        function revelarConvite() {
+            document.getElementById('mensagemEscondida').style.display = 'block';
+            Array.from({ length: 10 }).forEach((_, i) => {
+                setTimeout(criarCoracao, i * 300);
+            });
+        }
+
+        function resposta(resposta) {
+            if (resposta === 'sim') {
+                alert('🎉 Prepare seus melhores passos de dança! Te busco às 19:30 ❤️');
+                iniciarEfeitoConfete();
+            } else {
+                document.querySelector('body').style.background = 'linear-gradient(45deg, #2c3e50, #3498db)';
+                document.querySelector('h1').innerHTML = 'A aventura começa agora...';
+                document.getElementById('mensagemEscondida').innerHTML = `
+                    <p style="margin-top: 1rem;">Envie seu endereço que levarei você para:<br>
+                    1. Um mistério encantado<br>
+                    2. Uma experiência única<br>
+                    3. Uma noite que prometo nunca esqueceremos</p>`;
+            }
+        }
+
+        function iniciarEfeitoConfete() {
+            const cores = ['#ff69b4', '#8ac4ff', '#fff740', '#7fff8a'];
+            for (let i = 0; i < 50; i++) {
+                const confete = document.createElement('div');
+                confete.style.position = 'fixed';
+                confete.style.width = '10px';
+                confete.style.height = '10px';
+                confete.style.backgroundColor = cores[Math.floor(Math.random() * cores.length)];
+                confete.style.left = Math.random() * 100 + 'vw';
+                confete.style.top = '-10px';
+                confete.style.borderRadius = '50%';
+                confete.style.animation = `confeteFall ${Math.random() * 3 + 2}s linear`;
+                document.body.appendChild(confete);
+
+                setTimeout(() => confete.remove(), 5000);
+            }
+        }
+    </script>
+</body>
+
+</html>
